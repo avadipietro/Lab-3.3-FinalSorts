@@ -1,17 +1,19 @@
+//Ava DiPietro
+
 import java.util.Arrays;
 
 public class ArrayMethods3 {
 	
 	public static void main(String[] args) {
 		String[] list1 = {"train", "xyz", "saurabh", "computer", "vex", "yeah", "zebra", "hat", "banana", "water"};
-		int[] list3 = {4, 1, 7, 8, 6, 3, 5, 2};
+		int[] list3 = {4, 6, 7, 8, 1, 3, 5, 2, 0};
 		
 		//mergeSort Test
 		long start = System.nanoTime();
 		String[] mergeResult = mergeSort(list1);
 		long end = System.nanoTime();
 		long time = end - start;
-		System.out.println("Merge test took: " + time + " nanoseconds");
+		System.out.println("mergeSort test took: " + time + " nanoseconds");
 		System.out.println(Arrays.toString(mergeResult));
 		
 		//quickSort Test
@@ -19,7 +21,7 @@ public class ArrayMethods3 {
 		quickSort(list3, 0, list3.length - 1);
 		end = System.nanoTime();
 		time = end - start;
-		System.out.println("Partition test took: " + time + " nanoseconds");
+		System.out.println("quickSort test took: " + time + " nanoseconds");
 		System.out.println(Arrays.toString(list3));
 	}
 	
@@ -46,9 +48,10 @@ public class ArrayMethods3 {
 	}
 	
 	public static void quickSort(int[] list1, int front, int back) {
-		if (front != back) {
-			quickSort(list1, front, partition(list1, front, back) - 1);
-			quickSort(list1, partition(list1, front, back) + 1, back);
+		if (front < back) {
+			int p = partition(list1, front, back);
+			quickSort(list1, front, p - 1);
+			quickSort(list1, p + 1, back);
 		}
 	}
 	
@@ -82,9 +85,9 @@ public class ArrayMethods3 {
 	
 	public static int partition(int[] list, int front, int back) {
 		
-		int i = 1;
+		int i = front;
 		int pivot = list[front];		
-		for (int j = front + 2; j <= back; j++) {
+		for (int j = front + 1; j <= back; j++) {
 			if (list[j] < pivot) {
 				i++;
 				int m = list[i];
@@ -92,7 +95,7 @@ public class ArrayMethods3 {
 				list[j] = m;
 			}
 		}
-		for (int a = 0; a < i; a++) {
+		for (int a = front; a < i; a++) {
 			list[a] = list[a + 1];
 		}
 		list[i] = pivot;
